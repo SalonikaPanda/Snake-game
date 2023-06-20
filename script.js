@@ -9,7 +9,6 @@ const gameOverSound = new Audio('Level Completion.mp3');
 const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
-const touchStartPos = { x: 0, y: 0 };
 
 let gameOver = false;
 let foodX, foodY;
@@ -77,81 +76,6 @@ const changeDirection = e => {
   }
 
 };
-function handleMouseOrTouchEvent(event) {
-  // Check if the event target is within the game board
-  if (event.target === playBoard) {
-    // Get the coordinates of the event relative to the game board
-    const rect = playBoard.getBoundingClientRect();
-    const posX = event.clientX - rect.left;
-    const posY = event.clientY - rect.top;
-
-    // Determine the direction based on the position relative to the snake's head
-    const headX = snakeBody[0][0];
-    const headY = snakeBody[0][1];
-    const diffX = posX - (headX * 30 + 15);
-    const diffY = posY - (headY * 30 + 15);
-
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-      // Horizontal movement
-      velocityX = diffX > 0 ? 1 : -1;
-      velocityY = 0;
-    } else {
-      // Vertical movement
-      velocityX = 0;
-      velocityY = diffY > 0 ? 1 : -1;
-    }
-  }
-}
-function handleSwipeGesture(direction) {
-  switch (direction) {
-    case "up":
-      if (velocityY !== 1) {
-        velocityX = 0;
-        velocityY = -1;
-      }
-      break;
-    case "down":
-      if (velocityY !== -1) {
-        velocityX = 0;
-        velocityY = 1;
-      }
-      break;
-    case "left":
-      if (velocityX !== 1) {
-        velocityX = -1;
-        velocityY = 0;
-      }
-      break;
-    case "right":
-      if (velocityX !== -1) {
-        velocityX = 1;
-        velocityY = 0;
-      }
-      break;
-    }
-  }
-  function handleTouchEnd(event) {
-    const touch = event.changedTouches[0];
-    const touchEndPos = { x: touch.clientX, y: touch.clientY };
-    const diffX = touchEndPos.x - touchStartPos.x;
-    const diffY = touchEndPos.y - touchStartPos.y;
-    const absDiffX = Math.abs(diffX);
-    const absDiffY = Math.abs(diffY);
-  
-    if (absDiffX > absDiffY && absDiffX > 50) {
-      if (diffX > 0) {
-        handleSwipeGesture("right");
-      } else {
-        handleSwipeGesture("left");
-      }
-    } else if (absDiffY > absDiffX && absDiffY > 50) {
-      if (diffY > 0) {
-        handleSwipeGesture("down");
-      } else {
-        handleSwipeGesture("up");
-      }
-    }
-  }
 
 const initGame = () => {
   if (gameOver) return handleGameOver();
@@ -199,5 +123,3 @@ const initGame = () => {
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 350);
 document.addEventListener("keyup", changeDirection);
-document.addEventListener("mousedown", handleMouseOrTouchEvent);
-document.addEventListener("touchend", handleTouchEnd);
