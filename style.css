@@ -1,0 +1,129 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+#startPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(start\ bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  #gamePage.hidden {
+    display: none;
+  }
+  #startButton{
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 100;
+    background-color: blueviolet;
+    margin: 30px;
+    transition: transform 0.3s ease;
+  }
+  
+  #startButton:hover {
+    transform: scale(1.1);
+    background-color: violet; /* Change the background color to red */
+    color: white; /* Change the text color to white */
+  }
+  
+  #gameOverBoard {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #616161;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  #gameOverBoard h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #e6d8d8;
+  }
+  #restartButton{
+  background: blue;
+    color: white;
+    padding: 10px;
+    transition: transform 0.3s ease;
+  }
+  #restartButton:hover{
+    transform: scale(1.1);
+    color: white; 
+  }
+
+  .game-over-visible #gameOverBoard {
+    display: block;
+  }
+  
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #4f6131;
+}
+
+.body {
+    width: 65vmin;
+    height: 70vmin;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    background: #26251efc;
+}
+
+.scores {
+    color: #B8C6DC;
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 20px 27px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#board {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    background: rgb(144, 144, 168);
+    grid-template: repeat(18, 1fr) / repeat(18, 1fr);
+    justify-content: center;
+    gap: 0;
+    border: none;
+}
+#board .food {
+    background-image: url(food.jpg);
+    background-size: cover;
+}
+
+#board .head {
+    border-radius: 0%;
+    background-image: url(head.jpg);
+    background-size: cover;
+}
+
+.snake {
+    background-color: black;
+    border-radius: 0%;
+}
+
+
+.tail {
+    background: brown;
+    border: black;
+    border-width: 20px;
+    border-radius: 0%;
+}
