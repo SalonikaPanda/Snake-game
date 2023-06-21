@@ -77,34 +77,65 @@ const changeDirection = e => {
   }
 
 };
-
-function touchStart(evt) {
-  startingX = evt.touches[0].clientX;
-  startingY = evt.touches[0].clientY;
+function handleSwipeGesture(direction) {
+  switch (direction) {
+    case "up":
+      if (velocityY !== 1) {
+        velocityX = 0;
+        velocityY = -1;
+      }
+      break;
+    case "down":
+      if (velocityY !== -1) {
+        velocityX = 0;
+        velocityY = 1;
+      }
+      break;
+    case "left":
+      if (velocityX !== 1) {
+        velocityX = -1;
+        velocityY = 0;
+      }
+      break;
+    case "right":
+      if (velocityX !== -1) {
+        velocityX = 1;
+        velocityY = 0;
+      }
+      break;
+  }
 }
 
-function touchMove(evt) {
-  movingX = evt.touches[0].clientX;
-  movingY = evt.touches[0].clientY;
+function handleTouchStart(event) {
+  const touch = event.touches[0];
+  touchStartPos.x = touch.clientX;
+  touchStartPos.y = touch.clientY;
 }
 
-function touchEnd() {
-  const diffX = movingX - startingX;
-  const diffY = movingY - startingY;
+function handleTouchMove(event) {
+  const touch = event.touches[0];
+  touchMovePos.x = touch.clientX;
+  touchMovePos.y = touch.clientY;
+}
+
+
+function handleTouchEnd() {
+  const diffX = touchMovePos.x - touchStartPos.x;
+  const diffY = touchMovePos.y - touchStartPos.y;
   const absDiffX = Math.abs(diffX);
   const absDiffY = Math.abs(diffY);
 
   if (absDiffX > absDiffY && absDiffX > 100) {
     if (diffX > 0) {
-      changeDirection({ key: "ArrowRight" });
+      handleSwipeGesture("right");
     } else {
-      changeDirection({ key: "ArrowLeft" });
+      handleSwipeGesture("left");
     }
   } else if (absDiffY > absDiffX && absDiffY > 100) {
     if (diffY > 0) {
-      changeDirection({ key: "ArrowDown" });
+      handleSwipeGesture("down");
     } else {
-      changeDirection({ key: "ArrowUp" });
+      handleSwipeGesture("up");
     }
   }
 }
@@ -155,6 +186,6 @@ const initGame = () => {
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 350);
 document.addEventListener("keyup", changeDirection);
-document.addEventListener("touchstart", touchStart);
-document.addEventListener("touchmove", touchMove);
-document.addEventListener("touchend", touchEnd);
+document.addEventListener("touchstart", handleTouchStart);
+document.addEventListener("touchmove", handleTouchMove);
+document.addEventListener("touchend", handleTouchEnd);
