@@ -133,6 +133,10 @@ body {
     width: 85vmin;
     height: 80vmin;
   }
+   body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
   
 }
 
@@ -141,7 +145,10 @@ body {
     width: 85vmin;
     height: 110vmin;
   }
-  
+  body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }
 
 @media (min-width: 300px) and (max-width: 480px) {
@@ -149,5 +156,8 @@ body {
     width: 85vmin;
     height: 130vmin;
   }
-  
+  body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }
