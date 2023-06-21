@@ -10,6 +10,7 @@ const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
 
+let startingX, startingY, movingX, movingY;
 let gameOver = false;
 let foodX, foodY;
 let snakeX = 5, snakeY = 5;
@@ -77,6 +78,37 @@ const changeDirection = e => {
 
 };
 
+function touchStart(evt) {
+  startingX = evt.touches[0].clientX;
+  startingY = evt.touches[0].clientY;
+}
+
+function touchMove(evt) {
+  movingX = evt.touches[0].clientX;
+  movingY = evt.touches[0].clientY;
+}
+
+function touchEnd() {
+  const diffX = movingX - startingX;
+  const diffY = movingY - startingY;
+  const absDiffX = Math.abs(diffX);
+  const absDiffY = Math.abs(diffY);
+
+  if (absDiffX > absDiffY && absDiffX > 100) {
+    if (diffX > 0) {
+      changeDirection({ key: "ArrowRight" });
+    } else {
+      changeDirection({ key: "ArrowLeft" });
+    }
+  } else if (absDiffY > absDiffX && absDiffY > 100) {
+    if (diffY > 0) {
+      changeDirection({ key: "ArrowDown" });
+    } else {
+      changeDirection({ key: "ArrowUp" });
+    }
+  }
+}
+
 const initGame = () => {
   if (gameOver) return handleGameOver();
   let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
@@ -123,3 +155,6 @@ const initGame = () => {
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 350);
 document.addEventListener("keyup", changeDirection);
+document.addEventListener("touchstart", touchStart);
+document.addEventListener("touchmove", touchMove);
+document.addEventListener("touchend", touchEnd);
