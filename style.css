@@ -127,27 +127,3 @@ body {
     border-width: 20px;
     border-radius: 0%;
 }
-
-@media (min-width: 600px) and (max-width: 800px) {
-  .body{
-    width: 85vmin;
-    height: 80vmin;
-  }
-  
-}
-
-@media (min-width: 480px) and (max-width: 600px) {
-  .body{
-    width: 85vmin;
-    height: 110vmin;
-  }
-  
-}
-
-@media (min-width: 300px) and (max-width: 480px) {
-  .body{
-    width: 85vmin;
-    height: 130vmin;
-  }
-  
-}
