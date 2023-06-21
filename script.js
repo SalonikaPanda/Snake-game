@@ -10,7 +10,7 @@ const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
 
-let startingX, startingY, movingX, movingY;
+let touchStartPos.x, touchStartPos.y, touchMovePos.x, touchMovePos.y;
 let gameOver = false;
 let foodX, foodY;
 let snakeX = 5, snakeY = 5;
