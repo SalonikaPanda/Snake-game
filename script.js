@@ -10,7 +10,6 @@ const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
 
-let touchStartPos, touchStartPos, touchMovePos, touchMovePos;
 let gameOver = false;
 let foodX, foodY;
 let snakeX = 5, snakeY = 5;
@@ -77,68 +76,6 @@ const changeDirection = e => {
   }
 
 };
-function handleSwipeGesture(direction) {
-  switch (direction) {
-    case "up":
-      if (velocityY !== 1) {
-        velocityX = 0;
-        velocityY = -1;
-      }
-      break;
-    case "down":
-      if (velocityY !== -1) {
-        velocityX = 0;
-        velocityY = 1;
-      }
-      break;
-    case "left":
-      if (velocityX !== 1) {
-        velocityX = -1;
-        velocityY = 0;
-      }
-      break;
-    case "right":
-      if (velocityX !== -1) {
-        velocityX = 1;
-        velocityY = 0;
-      }
-      break;
-  }
-}
-
-function handleTouchStart(event) {
-  const touch = event.touches[0];
-  touchStartPos.x = touch.clientX;
-  touchStartPos.y = touch.clientY;
-}
-
-function handleTouchMove(event) {
-  const touch = event.touches[0];
-  touchMovePos.x = touch.clientX;
-  touchMovePos.y = touch.clientY;
-}
-
-
-function handleTouchEnd() {
-  const diffX = touchMovePos.x - touchStartPos.x;
-  const diffY = touchMovePos.y - touchStartPos.y;
-  const absDiffX = Math.abs(diffX);
-  const absDiffY = Math.abs(diffY);
-
-  if (absDiffX > absDiffY && absDiffX > 100) {
-    if (diffX > 0) {
-      handleSwipeGesture("right");
-    } else {
-      handleSwipeGesture("left");
-    }
-  } else if (absDiffY > absDiffX && absDiffY > 100) {
-    if (diffY > 0) {
-      handleSwipeGesture("down");
-    } else {
-      handleSwipeGesture("up");
-    }
-  }
-}
 
 const initGame = () => {
   if (gameOver) return handleGameOver();
@@ -186,6 +123,3 @@ const initGame = () => {
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 350);
 document.addEventListener("keyup", changeDirection);
-document.addEventListener("touchstart", handleTouchStart);
-document.addEventListener("touchmove", handleTouchMove);
-document.addEventListener("touchend", handleTouchEnd);
