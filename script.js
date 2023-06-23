@@ -62,10 +62,12 @@ const updateFoodPosition = () => {
 
 function handleGameOver() {
   clearInterval(setIntervalId);
+  hitSound.pause();
   gameOverSound.play();
   gameOver = true;
   gamePaused = true;
   gameOverBoard.style.display = "block";
+ gameOverSound.pause();
   gameOverBoard.innerHTML = `Game Over !<br>Score: ${score}<br><button id="restartButton">Restart</button>`;
   const restartButton = document.getElementById('restartButton');
   restartButton.addEventListener('click', restartGame);
@@ -133,7 +135,6 @@ const initGame = () => {
 
     if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
       hitSound.play();
-      gameOverSound.play();
       return handleGameOver();
     }
   }
