@@ -10,9 +10,13 @@
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    background-image: url(start\ bg.jpg);
-    background-size: cover;
+    background-image: url(startbg.jpg);
+    background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-position: center center;
+  }
+  #startPage h1{
+    font-size: 1.5rem;
   }
   
   #gamePage.hidden {
@@ -29,8 +33,8 @@
   
   #startButton:hover {
     transform: scale(1.1);
-    background-color: violet; /* Change the background color to red */
-    color: white; /* Change the text color to white */
+    background-color: violet; 
+    color: white; 
   }
   
   #gameOverBoard {
@@ -110,7 +114,6 @@ body {
 }
 
 #board .head {
-    border-radius: 0%;
     background-image: url(head.jpg);
     background-size: cover;
 }
@@ -127,13 +130,12 @@ body {
     border-width: 20px;
     border-radius: 0%;
 }
-
 @media (min-width: 600px) and (max-width: 800px) {
   .body{
     width: 85vmin;
     height: 80vmin;
   }
-   body{
+  body{
     overflow-x: hidden;
     overflow-y: hidden;
   }
@@ -149,15 +151,34 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
   }
+  #board .head {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  #board .food{
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
 }
 
 @media (min-width: 300px) and (max-width: 480px) {
   .body{
-    width: 85vmin;
+    width: 95vmin;
     height: 130vmin;
   }
   body{
     overflow-x: hidden;
     overflow-y: hidden;
   }
+  #board .head {
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  #board .food{
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  
 }
