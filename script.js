@@ -123,3 +123,51 @@ const initGame = () => {
 updateFoodPosition();
 setIntervalId = setInterval(initGame, 350);
 document.addEventListener("keyup", changeDirection);
+
+// Swipe events
+let touchStartX = {};
+let touchStartY = {};
+let touchEndX = {};
+let touchEndY = {};
+
+document.addEventListener('touchstart', function(event) {
+  for (let i = 0; i < event.touches.length; i++) {
+    touchStartX[event.touches[i].identifier] = event.touches[i].clientX;
+    touchStartY[event.touches[i].identifier] = event.touches[i].clientY;
+  }
+}, false);
+
+document.addEventListener('touchend', function(event) {
+  for (let i = 0; i < event.changedTouches.length; i++) {
+    const touch = event.changedTouches[i];
+    const identifier = touch.identifier;
+    touchEndX[identifier] = touch.clientX;
+    touchEndY[identifier] = touch.clientY;
+
+    const deltaX = touchEndX[identifier] - touchStartX[identifier];
+    const deltaY = touchEndY[identifier] - touchStartY[identifier];
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 0 && velocityX != -1) {
+        // Swipe right
+        velocityX = 1;
+        velocityY = 0;
+      } else if (deltaX < 0 && velocityX != 1) {
+        // Swipe left
+        velocityX = -1;
+        velocityY = 0;
+      }
+    } else {
+      if (deltaY > 0 && velocityY != -1) {
+        // Swipe down
+        velocityX = 0;
+        velocityY = 1;
+      } else if (deltaY < 0 && velocityY != 1) {
+        // Swipe up
+        velocityX = 0;
+        velocityY = -1;
+      }
+    }
+  }
+}, false);
+
