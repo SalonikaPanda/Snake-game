@@ -10,7 +10,9 @@ const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
 
+let gameActive = false;
 let gameOver = false;
+let gamePaused = false;
 let foodX, foodY;
 let snakeX = 5, snakeY = 5;
 let velocityX = 0, velocityY = 0;
@@ -28,11 +30,13 @@ function startGame() {
 
   resetGame();
   updateFoodPosition();
+  gameActive = true;
   setIntervalId = setInterval(initGame, 350);
 }
 
 function resetGame() {
   gameOver = false;
+  gamePaused = false;
   snakeX = 5;
   snakeY = 5;
   velocityX = 0;
@@ -42,25 +46,41 @@ function resetGame() {
   scoreElement.innerText = `Score: ${score}`;
 }
 
+function restartGame() {
+  gameOverBoard.style.display = "none";
+  resetGame();
+  gameActive = true;
+  gamePaused = false;
+  updateFoodPosition();
+  setIntervalId = setInterval(initGame, 350);
+}
 const updateFoodPosition = () => {
   foodX = Math.floor(Math.random() * 18) + 1;
   foodY = Math.floor(Math.random() * 18) + 1;
 }
-restartButton.addEventListener('click', function() {
-  startGame();
-  gameOverBoard.style.display = "none"; // Hide the game over board
-});
+
 
 function handleGameOver() {
   clearInterval(setIntervalId);
   gameOverSound.play();
   gameOver = true;
+  gamePaused = true;
   gameOverBoard.style.display = "block";
-  resetGame();
+  gameOverBoard.innerHTML = `Game Over !<br>Score: ${score}<br><button id="restartButton">Restart</button>`;
+  const restartButton = document.getElementById('restartButton');
+  restartButton.addEventListener('click', restartGame);
 }
 
 
 const changeDirection = e => {
+  if (!gameActive) return;
+
+  if (gameOver || gamePaused) {
+    if (e.key === "Enter") {
+      restartGame();
+    }
+    return;
+  }
   if (e.key === "ArrowUp" && velocityY != 1) {
     velocityX = 0;
     velocityY = -1;
@@ -78,7 +98,7 @@ const changeDirection = e => {
 };
 
 const initGame = () => {
-  if (gameOver) return handleGameOver();
+ if (!gameActive) return;
   let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
 
   if (snakeX === foodX && snakeY === foodY) {
@@ -102,7 +122,7 @@ const initGame = () => {
 
   if (snakeX <= 0 || snakeX > 18 || snakeY <= 0 || snakeY > 18) {
     hitSound.play();
-    return gameOver = true;
+   return handleGameOver();
   }
 
   for (let i = 0; i < snakeBody.length; i++) {
@@ -114,7 +134,7 @@ const initGame = () => {
     if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
       hitSound.play();
       gameOverSound.play();
-      gameOver = true;
+      return handleGameOver();
     }
   }
   playBoard.innerHTML = html;
