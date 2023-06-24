@@ -123,7 +123,6 @@ const initGame = () => {
 
   if (snakeX <= 0 || snakeX > 18 || snakeY <= 0 || snakeY > 18) {
     hitSound.play();
-    hitSound.pause();
    return handleGameOver();
   }
 
@@ -135,7 +134,6 @@ const initGame = () => {
 
     if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
       hitSound.play();
-      hitSound.pause();
       return handleGameOver();
     }
   }
