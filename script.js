@@ -69,7 +69,6 @@ function handleGameOver() {
   gameOver = true;
   gamePaused = true;
   gameOverBoard.style.display = "block";
- gameOverSound.pause();
   gameOverBoard.innerHTML = `Game Over !<br>Score: ${score}<br><button id="restartButton">Restart</button>`;
   const restartButton = document.getElementById('restartButton');
   restartButton.addEventListener('click', restartGame);
