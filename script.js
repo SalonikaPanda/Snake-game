@@ -5,7 +5,6 @@ const gameOverBoard = document.getElementById('gameOverBoard');
 const restartButton = document.getElementById('restartButton');
 const foodSound = new Audio('Score.mp3');
 const hitSound = new Audio('Hit.mp3');
-const gameOverSound = new Audio('Level Completion.mp3');
 const playBoard = document.querySelector("#board");
 const scoreElement = document.querySelector("#scoreBox");
 const highScoreElement = document.querySelector("#highscoreBox");
@@ -18,6 +17,7 @@ let snakeX = 5, snakeY = 5;
 let velocityX = 0, velocityY = 0;
 let snakeBody = [];
 let setIntervalId;
+let hitSound=false;
 let score = 0;
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
@@ -62,7 +62,10 @@ const updateFoodPosition = () => {
 
 function handleGameOver() {
   clearInterval(setIntervalId);
-  gameOverSound.play();
+  if (!hitSoundPlayed) {
+    hitSound.play();
+    hitSoundPlayed = true;
+  }
   gameOver = true;
   gamePaused = true;
   gameOverBoard.style.display = "block";
